@@ -1,0 +1,124 @@
+.homepage {
+	display: flex;
+	height: 100vh;
+	background: hsla(194, 39%, 22%, 1);
+	background: linear-gradient(
+		217deg,
+		hsla(194, 39%, 22%, 1) 16%,
+		hsla(199, 29%, 20%, 1) 84%
+	);
+	background: -moz-linear-gradient(
+		217deg,
+		hsla(194, 39%, 22%, 1) 16%,
+		hsla(199, 29%, 20%, 1) 84%
+	);
+	background: -webkit-linear-gradient(
+		217deg,
+		hsla(194, 39%, 22%, 1) 16%,
+		hsla(199, 29%, 20%, 1) 84%
+	);
+}
+
+.vertical-nav {
+	width: 70px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	padding: 10px 0;
+	background: rgb(62, 75, 83);
+	z-index: 1000;
+}
+
+.nav-item {
+	text-align: center;
+	margin: 10px 0;
+	cursor: pointer;
+	transition: transform 0.1s ease;
+	background: none; /* Remove default button background */
+	border: none; /* Remove default button border */
+	padding: 0; /* Remove default button padding */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+	text-decoration: none;
+}
+
+.nav-item:focus {
+	outline: none; /* Remove focus outline for clicked state */
+}
+
+.nav-item:hover {
+	transform: scale(1.005);
+}
+
+.nav-item:active {
+	transform: scale(0.95); /* Slightly decrease size when clicked */
+}
+
+.nav-item img {
+	width: 35px;
+	height: auto;
+	filter: invert(100%);
+	pointer-events: none; /* Disable mouse events on the image */
+	user-select: none; /* Prevent image selection */
+}
+
+.nav-item p {
+	font-size: 0.8rem;
+	color: #fff;
+}
+
+.nav-item.bottom {
+	margin-top: auto;
+	margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+	.vertical-nav {
+		width: 100%;
+		height: 60px;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		bottom: 0;
+		top: auto;
+		left: auto;
+		padding-top: 15px;
+		padding-bottom: 1px;
+		background: rgb(62, 75, 83);
+		z-index: 1000;
+	}
+
+	.homepage {
+		padding-bottom: 60px;
+	}
+
+	.nav-item {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 2px;
+	}
+
+	.nav-item img {
+		width: 24px;
+	}
+
+	.nav-item p {
+		font-size: 0.7rem;
+	}
+
+	.nav-item.bottom {
+		margin-top: 0;
+	}
+}

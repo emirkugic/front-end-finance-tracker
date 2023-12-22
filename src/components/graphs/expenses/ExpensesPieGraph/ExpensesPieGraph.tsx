@@ -7,6 +7,7 @@ import styles from "./ExpensesPieGraph.module.css";
 import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { ChartOptions } from "chart.js";
+import { user_id } from "../../../../constants";
 
 import {
 	Chart as ChartJS,
@@ -99,7 +100,7 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 				"http://localhost:8080/api/expenses/getBetweenDates",
 				{
 					params: {
-						userId: "6549031fc02fd9204841b306",
+						userId: user_id,
 						startDate: startDate,
 						endDate: endDate,
 					},
