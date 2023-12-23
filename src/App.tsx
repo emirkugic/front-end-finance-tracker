@@ -5,7 +5,7 @@ import IncomesGraph from "./components/graphs/incomes/IncomesGraph";
 import { user_id } from "./constants";
 import "./App.css";
 import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
-import ExpensesList from "./components/graphs/expenses/ExpenseGraph/ExpensesList";
+import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
 
 const App: React.FC = () => {
 	return (

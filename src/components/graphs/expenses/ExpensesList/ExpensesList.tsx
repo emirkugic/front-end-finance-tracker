@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_URL } from "../../../../constants"; // Replace with your actual import path
 import {
 	Table,
 	TableBody,
@@ -15,6 +16,7 @@ import {
 	MenuItem,
 	FormControl,
 	InputLabel,
+	TextField,
 } from "@mui/material";
 
 type ExpenseData = {
@@ -34,24 +36,56 @@ interface ExpensesListProps {
 
 const ExpensesList: React.FC<ExpensesListProps> = ({
 	userId,
-	startDate,
-	endDate,
+	startDate: propsStartDate,
+	endDate: propsEndDate,
 }) => {
 	const [expenses, setExpenses] = useState<ExpenseData[]>([]);
 	const [sortedExpenses, setSortedExpenses] = useState<ExpenseData[]>([]);
 	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 	const [selectedCategory, setSelectedCategory] = useState<string>("");
+	const [selectedPaymentType, setSelectedPaymentType] = useState<string>("");
+	const [startDate, setStartDate] = useState<string>(
+		propsStartDate || "1990-01-01"
+	);
+	const [endDate, setEndDate] = useState<string>(propsEndDate || "2100-01-01");
+	const [paymentTypes, setPaymentTypes] = useState<string[]>([]);
 
 	useEffect(() => {
 		const fetchExpenses = async () => {
-			const response = await axios.get(
-				"http://localhost:8080/api/expenses/getBetweenDates",
-				{
-					params: { userId, startDate, endDate },
-				}
-			);
-			setExpenses(response.data);
-			setSortedExpenses(response.data); // Initialize with fetched data
+			try {
+				const response = await axios.get(
+					`${API_URL}/expenses/getBetweenDates`,
+					{
+						params: { userId, startDate, endDate },
+					}
+				);
+				const expensesData: ExpenseData[] = response.data;
+
+				const expensesWithCardNames = await Promise.all(
+					expensesData.map(async (expense) => {
+						if (!expense.source.toLowerCase().includes("cash")) {
+							try {
+								const cardNameResponse = await axios.get(
+									`${API_URL}/credit-cards/getCardName/${expense.source}`
+								);
+								expense.source = cardNameResponse.data || "Unknown Card";
+							} catch (error) {
+								console.error("Error fetching card name:", error);
+								expense.source = "Unknown Card";
+							}
+						}
+						return expense;
+					})
+				);
+
+				setExpenses(expensesWithCardNames);
+				setSortedExpenses(expensesWithCardNames);
+				setPaymentTypes(
+					Array.from(new Set(expensesWithCardNames.map((e) => e.source)))
+				);
+			} catch (error) {
+				console.error("Error fetching expenses:", error);
+			}
 		};
 
 		fetchExpenses();
@@ -66,7 +100,10 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 	const formatDate = (dateString: string): string =>
 		new Date(dateString).toLocaleDateString();
 
-	const totalAmount = expenses.reduce((sum, record) => sum + record.amount, 0);
+	const totalAmount = sortedExpenses.reduce(
+		(sum, record) => sum + record.amount,
+		0
+	);
 
 	const sortExpenses = () => {
 		const sorted = [...expenses].sort((a, b) => {
@@ -92,6 +129,26 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 		if (category) {
 			setSortedExpenses(
 				expenses.filter((expense) => expense.category === category)
+			);
+		} else {
+			setSortedExpenses(expenses); // reset to all expenses
+		}
+	};
+
+	const handlePaymentTypeFilterChange = (
+		event: React.ChangeEvent<{ value: unknown }>
+	) => {
+		const paymentType = event.target.value as string;
+		setSelectedPaymentType(paymentType);
+		if (paymentType === "Cash") {
+			setSortedExpenses(
+				expenses.filter((expense) =>
+					expense.source.toLowerCase().includes("cash")
+				)
+			);
+		} else if (paymentType) {
+			setSortedExpenses(
+				expenses.filter((expense) => expense.source === paymentType)
 			);
 		} else {
 			setSortedExpenses(expenses); // reset to all expenses
@@ -125,6 +182,43 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 						))}
 					</Select>
 				</FormControl>
+				<FormControl sx={{ minWidth: 120, mx: 2 }}>
+					<InputLabel id="payment-type-filter-label">Payment Type</InputLabel>
+					<Select
+						labelId="payment-type-filter-label"
+						id="payment-type-filter"
+						value={selectedPaymentType}
+						label="Payment Type"
+						onChange={handlePaymentTypeFilterChange}
+					>
+						<MenuItem value="">
+							<em>All</em>
+						</MenuItem>
+						<MenuItem value="Cash">Cash</MenuItem>
+						{paymentTypes
+							.filter((type) => type !== "Cash")
+							.map((type) => (
+								<MenuItem key={type} value={type}>
+									{type}
+								</MenuItem>
+							))}
+					</Select>
+				</FormControl>
+				<TextField
+					label="Start Date"
+					type="date"
+					value={startDate}
+					onChange={(e) => setStartDate(e.target.value)}
+					InputLabelProps={{ shrink: true }}
+					sx={{ mr: 1 }}
+				/>
+				<TextField
+					label="End Date"
+					type="date"
+					value={endDate}
+					onChange={(e) => setEndDate(e.target.value)}
+					InputLabelProps={{ shrink: true }}
+				/>
 				<Box>
 					<Button
 						variant="outlined"
@@ -183,7 +277,7 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 								</TableCell>
 							</TableRow>
 						))}
-						{sortedExpenses.length < 10 && // Fill empty rows to ensure the table size is always for 10 rows
+						{sortedExpenses.length < 10 &&
 							[...Array(10 - sortedExpenses.length)].map((_, index) => (
 								<TableRow key={`empty-${index}`}>
 									<TableCell component="th" scope="row">
