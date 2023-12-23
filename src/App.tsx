@@ -6,10 +6,17 @@ import { user_id } from "./constants";
 import "./App.css";
 import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
 import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
+import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
 
 const App: React.FC = () => {
 	return (
 		<>
+			<IncomesList
+				userId={user_id}
+				startDate={"2000-01-01"}
+				endDate={"2100-01-01"}
+			/>
+
 			<ExpensesList
 				userId={user_id}
 				startDate={"2000-01-01"}
