@@ -7,10 +7,19 @@ import "./App.css";
 import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
 import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
 import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
+import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
+import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
 
 const App: React.FC = () => {
 	return (
 		<>
+			<ExpenseForm />
+			<BalanceGraph
+				userId={user_id}
+				startDate={"2023-10-10"}
+				endDate={"2024-01-01"}
+			/>
+
 			<IncomesList
 				userId={user_id}
 				startDate={"2000-01-01"}
