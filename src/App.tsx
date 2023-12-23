@@ -9,10 +9,13 @@ import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList
 import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
 import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
 import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
+import Navbar from "./components/navbar/Navbar";
 
 const App: React.FC = () => {
 	return (
 		<>
+			<Navbar />
+
 			<ExpenseForm />
 			<BalanceGraph
 				userId={user_id}
