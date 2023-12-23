@@ -8,9 +8,6 @@ import {
 	Container,
 	Paper,
 	Grid,
-	CssBaseline,
-	ThemeProvider,
-	createTheme,
 	IconButton,
 	InputAdornment,
 	Snackbar,
@@ -18,18 +15,9 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { API_URL } from "../../constants";
 
-const theme = createTheme({
-	palette: {
-		background: {
-			default: "#e0e0e0",
-		},
-	},
-});
-
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [repeatPassword, setRepeatPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [isRegistering, setIsRegistering] = useState(false);
@@ -51,12 +39,12 @@ const Login: React.FC = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				credentials: "include", // Needed to include the cookie in the request
+				credentials: "include",
 				body: JSON.stringify({ email, password }),
 			});
 			const data = await response.json();
 			if (response.ok) {
-				console.log("JWT Token:", data.jwt); // Console log the JWT token
+				console.log("JWT Token:", data.jwt);
 				setSnackbarMessage("Login successful!");
 			} else {
 				setSnackbarMessage(data.message || "Login failed!");
@@ -71,11 +59,7 @@ const Login: React.FC = () => {
 		event: React.FormEvent<HTMLFormElement>
 	) => {
 		event.preventDefault();
-		if (password !== repeatPassword) {
-			setSnackbarMessage("Passwords do not match!");
-			setSnackbarOpen(true);
-			return;
-		}
+
 		try {
 			const response = await fetch(`${API_URL}/auth/register`, {
 				method: "POST",
@@ -108,175 +92,149 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline />
-			<Container component="main" maxWidth="xs">
-				<Box
+		<Container component="main" maxWidth="xs">
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					my: 4, // This adds margin to top and bottom
+				}}
+			>
+				<Paper
+					elevation={3}
 					sx={{
+						p: 4,
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						height: "100vh",
-						justifyContent: "center",
+						width: "100%",
+						bgcolor: "background.default",
 					}}
 				>
-					<Paper
-						elevation={3}
-						sx={{
-							p: 4,
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							width: "100%",
-							bgcolor: "background.default",
-						}}
-					>
-						{!isRegistering ? (
-							<form onSubmit={handleLoginSubmit}>
-								<Typography variant="h5" sx={{ mb: 2 }}>
-									Login
-								</Typography>
-								<TextField
-									fullWidth
-									label="Email"
-									type="email"
-									margin="normal"
-									required
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-								/>
-								<TextField
-									fullWidth
-									label="Password"
-									type={showPassword ? "text" : "password"}
-									margin="normal"
-									required
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									InputProps={{
-										endAdornment: (
-											<InputAdornment position="end">
-												<IconButton
-													onClick={() => setShowPassword(!showPassword)}
-													onMouseDown={handleMouseDownPassword}
-													edge="end"
-												>
-													{showPassword ? <VisibilityOff /> : <Visibility />}
-												</IconButton>
-											</InputAdornment>
-										),
-									}}
-								/>
-								<Button type="submit" variant="contained" sx={{ mt: 2, mb: 2 }}>
-									Login
-								</Button>
-								<Divider sx={{ my: 2 }} />
-								<Button onClick={() => setIsRegistering(true)} size="small">
-									Need an account? Register
-								</Button>
-								<Typography variant="body2" sx={{ mt: 2, cursor: "pointer" }}>
-									Forgot Password?
-								</Typography>
-							</form>
-						) : (
-							<form onSubmit={handleRegisterSubmit}>
-								<Typography variant="h5" sx={{ mb: 2 }}>
-									Register
-								</Typography>
-								<Grid container spacing={2}>
-									<Grid item xs={6}>
-										<TextField
-											fullWidth
-											label="Name"
-											margin="normal"
-											required
-											value={firstName}
-											onChange={(e) => setFirstName(e.target.value)}
-										/>
-									</Grid>
-									<Grid item xs={6}>
-										<TextField
-											fullWidth
-											label="Surname"
-											margin="normal"
-											required
-											value={lastName}
-											onChange={(e) => setLastName(e.target.value)}
-										/>
-									</Grid>
+					{!isRegistering ? (
+						<form onSubmit={handleLoginSubmit}>
+							<Typography variant="h5" sx={{ mb: 2 }}>
+								Login
+							</Typography>
+							<TextField
+								fullWidth
+								label="Email"
+								type="email"
+								margin="normal"
+								required
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<TextField
+								fullWidth
+								label="Password"
+								type={showPassword ? "text" : "password"}
+								margin="normal"
+								required
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton
+												onClick={() => setShowPassword(!showPassword)}
+												onMouseDown={handleMouseDownPassword}
+												edge="end"
+											>
+												{showPassword ? <VisibilityOff /> : <Visibility />}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+							<Button type="submit" variant="contained" sx={{ mt: 2, mb: 2 }}>
+								Login
+							</Button>
+							<Divider sx={{ my: 2 }} />
+							<Button onClick={() => setIsRegistering(true)} size="large">
+								Need an account? Register
+							</Button>
+							<Typography variant="body2" sx={{ mt: 2, cursor: "pointer" }}>
+								Forgot Password?
+							</Typography>
+						</form>
+					) : (
+						<form onSubmit={handleRegisterSubmit}>
+							<Typography variant="h5" sx={{ mb: 2 }}>
+								Register
+							</Typography>
+							<Grid container spacing={2}>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										label="Name"
+										margin="normal"
+										required
+										value={firstName}
+										onChange={(e) => setFirstName(e.target.value)}
+									/>
 								</Grid>
-								<TextField
-									fullWidth
-									label="Email"
-									type="email"
-									margin="normal"
-									required
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-								/>
-								<TextField
-									fullWidth
-									label="Password"
-									type={showPassword ? "text" : "password"}
-									margin="normal"
-									required
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									InputProps={{
-										endAdornment: (
-											<InputAdornment position="end">
-												<IconButton
-													onClick={() => setShowPassword(!showPassword)}
-													onMouseDown={handleMouseDownPassword}
-													edge="end"
-												>
-													{showPassword ? <VisibilityOff /> : <Visibility />}
-												</IconButton>
-											</InputAdornment>
-										),
-									}}
-								/>
-								<TextField
-									fullWidth
-									label="Repeat Password"
-									type={showPassword ? "text" : "password"}
-									margin="normal"
-									required
-									value={repeatPassword}
-									onChange={(e) => setRepeatPassword(e.target.value)}
-									InputProps={{
-										endAdornment: (
-											<InputAdornment position="end">
-												<IconButton
-													onClick={() => setShowPassword(!showPassword)}
-													onMouseDown={handleMouseDownPassword}
-													edge="end"
-												>
-													{showPassword ? <VisibilityOff /> : <Visibility />}
-												</IconButton>
-											</InputAdornment>
-										),
-									}}
-								/>
-								<Button type="submit" variant="contained" sx={{ mt: 2, mb: 2 }}>
-									Register
-								</Button>
-								<Divider sx={{ my: 2 }} />
-								<Button onClick={() => setIsRegistering(false)} size="small">
-									Already have an account? Login
-								</Button>
-							</form>
-						)}
-					</Paper>
-				</Box>
-			</Container>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										label="Surname"
+										margin="normal"
+										required
+										value={lastName}
+										onChange={(e) => setLastName(e.target.value)}
+									/>
+								</Grid>
+							</Grid>
+							<TextField
+								fullWidth
+								label="Email"
+								type="email"
+								margin="normal"
+								required
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<TextField
+								fullWidth
+								label="Password"
+								type={showPassword ? "text" : "password"}
+								margin="normal"
+								required
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton
+												onClick={() => setShowPassword(!showPassword)}
+												onMouseDown={handleMouseDownPassword}
+												edge="end"
+											>
+												{showPassword ? <VisibilityOff /> : <Visibility />}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+							<Button type="submit" variant="contained" sx={{ mt: 2, mb: 2 }}>
+								Register
+							</Button>
+							<Divider sx={{ my: 2 }} />
+							<Button onClick={() => setIsRegistering(false)} size="small">
+								Already have an account? Login
+							</Button>
+						</form>
+					)}
+				</Paper>
+			</Box>
 			<Snackbar
 				open={snackbarOpen}
 				autoHideDuration={6000}
 				onClose={handleCloseSnackbar}
 				message={snackbarMessage}
 			/>
-		</ThemeProvider>
+		</Container>
 	);
 };
 
