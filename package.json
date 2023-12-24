@@ -19,6 +19,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "dayjs": "^1.11.10",
     "mdb-react-ui-kit": "^7.0.0",
+    "noisejs": "^2.1.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.25.0",
@@ -26,6 +27,7 @@
     "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
+    "@types/noisejs": "^0.0.31",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

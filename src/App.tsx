@@ -10,10 +10,16 @@ import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
 import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
 import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
 import Navbar from "./components/navbar/Navbar";
+import CreditCard from "./components/credit_card/creditCard";
 
 const App: React.FC = () => {
 	return (
 		<>
+			<CreditCard />
+			<CreditCard />
+			<CreditCard />
+			<CreditCard />
+			<CreditCard />
 			<Navbar />
 
 			<ExpenseForm />
