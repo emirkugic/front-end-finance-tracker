@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
 			>
 				<Link to="/profile" style={{ textDecoration: "none" }}>
 					<NavbarButton>
-						<InsertEmoticonIcon fontSize="large" style={{ color: "white" }} />
+						<InsertEmoticonIcon fontSize="large" style={{ color: "black" }} />
 					</NavbarButton>
 				</Link>
 				<NavbarText>Profile</NavbarText>

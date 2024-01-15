@@ -1,20 +1,36 @@
-// import Login from "./components/login/Login";
-// import ExpensesPieGraph from "./components/graphs/expenses/ExpensesPieGraph/ExpensesPieGraph";
-// import IncomesGraph from "./components/graphs/incomes/IncomesGraph";
-// import { user_id } from "./constants";
-// import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
-// import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
-// import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
-// import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
-// import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
-// import Navbar from './components/navbar/Navbar';
-// import CreditCard from "./components/credit_card/CreditCard";
+import { Grid, Paper, Box } from "@mui/material";
+import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
 
 const ReportsPage = () => {
 	return (
-		<>
-			<h1>User Reports Page</h1>
-		</>
+		<Box sx={{ flexGrow: 1, padding: 2 }}>
+			<Grid container spacing={2} alignItems="center" justifyContent="center">
+				<Grid item xs={12} md={6}>
+					<Paper
+						elevation={0}
+						sx={{ padding: 2, backgroundColor: "transparent" }}
+					>
+						<ExpensesPieGraph
+							startDate="2020-01-01"
+							endDate="2100-01-01"
+							parameter="category"
+						/>
+					</Paper>
+				</Grid>
+				<Grid item xs={12} md={6}>
+					<Paper
+						elevation={0}
+						sx={{ padding: 2, backgroundColor: "transparent" }}
+					>
+						<ExpensesPieGraph
+							startDate="2020-01-01"
+							endDate="2100-01-01"
+							parameter="source"
+						/>
+					</Paper>
+				</Grid>
+			</Grid>
+		</Box>
 	);
 };
 
