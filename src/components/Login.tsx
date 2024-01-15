@@ -13,7 +13,7 @@ import {
 	Snackbar,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { API_URL } from "../../constants";
+import { API_URL } from "../constants";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");

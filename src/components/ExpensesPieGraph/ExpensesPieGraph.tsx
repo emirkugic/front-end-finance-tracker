@@ -7,7 +7,7 @@ import styles from "./ExpensesPieGraph.module.css";
 import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { ChartOptions } from "chart.js";
-import { user_id } from "../../../../constants";
+import { user_id } from "../../constants";
 
 import {
 	Chart as ChartJS,

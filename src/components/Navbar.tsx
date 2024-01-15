@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import calendarIcon from "../../assets/icons/calendar.png";
-import balanceIcon from "../../assets/icons/balance.png";
-import budgetIcon from "../../assets/icons/budget.png";
-import reportsIcon from "../../assets/icons/report.png";
-import syncIcon from "../../assets/icons/sync.png";
+import calendarIcon from "../assets/icons/calendar.png";
+import balanceIcon from "../assets/icons/balance.png";
+import budgetIcon from "../assets/icons/budget.png";
+import reportsIcon from "../assets/icons/report.png";
+import { Link } from "react-router-dom";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 
 const NavbarContainer = styled("div")({
 	width: "64px",
@@ -35,7 +36,7 @@ const NavbarButton = styled(IconButton)({
 	"&:active": {
 		transform: "scale(0.9)",
 	},
-	// Disabling text and image selection
+
 	"& *": {
 		userSelect: "none",
 	},
@@ -48,28 +49,27 @@ const NavbarButton = styled(IconButton)({
 const NavbarIcon = styled("img")({
 	width: "30px",
 	height: "30px",
-	marginBottom: "4px", // You can adjust this value to move the labels closer
+	marginBottom: "4px",
 });
 
 const NavbarText = styled(Typography)({
 	fontSize: "0.75rem",
 	color: "white",
-	marginTop: "-4px", // Adjust this value to move the labels closer
-	userSelect: "none", // Disable text selection
+	marginTop: "-4px",
+	userSelect: "none",
 });
 
 const Navbar: React.FC = () => {
 	return (
 		<NavbarContainer>
-			{/* Top buttons with labels */}
 			<Box
 				sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
 			>
 				{[
-					{ icon: calendarIcon, label: "Today" },
-					{ icon: balanceIcon, label: "Balance" },
-					{ icon: budgetIcon, label: "Budget" },
-					{ icon: reportsIcon, label: "Reports" },
+					{ icon: calendarIcon, label: "Today", path: "/" },
+					{ icon: balanceIcon, label: "Balance", path: "/balance" },
+					{ icon: budgetIcon, label: "Budget", path: "/budget" },
+					{ icon: reportsIcon, label: "Reports", path: "/reports" },
 				].map((item, index) => (
 					<Box
 						key={index}
@@ -79,9 +79,11 @@ const Navbar: React.FC = () => {
 							alignItems: "center",
 						}}
 					>
-						<NavbarButton>
-							<NavbarIcon src={item.icon} alt={item.label} />
-						</NavbarButton>
+						<Link to={item.path} style={{ textDecoration: "none" }}>
+							<NavbarButton>
+								<NavbarIcon src={item.icon} alt={item.label} />
+							</NavbarButton>
+						</Link>
 						<NavbarText>{item.label}</NavbarText>
 					</Box>
 				))}
@@ -91,16 +93,17 @@ const Navbar: React.FC = () => {
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
-					marginBottom: "20px", // Adjust this value to move the sync icon upwards
+					marginBottom: "20px",
 				}}
 			>
-				<NavbarButton>
-					<NavbarIcon src={syncIcon} alt="Sync" />
-				</NavbarButton>
-				<NavbarText>Sync</NavbarText>
+				<Link to="/profile" style={{ textDecoration: "none" }}>
+					<NavbarButton>
+						<InsertEmoticonIcon fontSize="large" style={{ color: "white" }} />
+					</NavbarButton>
+				</Link>
+				<NavbarText>Profile</NavbarText>
 			</Box>
 		</NavbarContainer>
 	);
 };
-
 export default Navbar;

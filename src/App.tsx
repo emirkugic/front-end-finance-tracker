@@ -1,21 +1,66 @@
-import React from "react";
-import Login from "./components/login/Login";
-import ExpensesPieGraph from "./components/graphs/expenses/ExpensesPieGraph/ExpensesPieGraph";
-import IncomesGraph from "./components/graphs/incomes/IncomesGraph";
-import { user_id } from "./constants";
-import "./App.css";
-import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
-import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
-import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
-import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
-import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
-import Navbar from "./components/navbar/Navbar";
-import CreditCard from "./components/credit_card/creditCard";
+// import Login from "./components/login/Login";
+// import ExpensesPieGraph from "./components/graphs/expenses/ExpensesPieGraph/ExpensesPieGraph";
+// import IncomesGraph from "./components/graphs/incomes/IncomesGraph";
+// import { user_id } from "./constants";
+// import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
+// import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
+// import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
+// import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
+// import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
+// import Navbar from './components/navbar/Navbar';
+// import CreditCard from "./components/credit_card/CreditCard";
 
-const App: React.FC = () => {
+import "./App.css";
+import UserProfilePage from "./pages/UserProfilePage";
+import ReportsPage from "./pages/ReportsPage";
+import Navbar from "./components/Navbar";
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	Link,
+	useLocation,
+} from "react-router-dom";
+
+const Navigation = () => {
+	const location = useLocation();
+	const shouldDisplayNavbar = location.pathname !== "/";
+
 	return (
-		<>
-			<CreditCard />
+		<nav>
+			<Navbar />
+			{!shouldDisplayNavbar && <Button />}
+		</nav>
+	);
+};
+
+const Button = () => {
+	return (
+		<Link to="/profile">
+			<button>Go to Profile</button>
+		</Link>
+	);
+};
+
+const App = () => {
+	return (
+		<Router>
+			<div>
+				<Navigation />
+
+				<Routes>
+					<Route path="/profile" element={<UserProfilePage />} />
+					<Route path="/reports" element={<ReportsPage />} />
+				</Routes>
+			</div>
+		</Router>
+	);
+};
+
+export default App;
+
+/*
+<CreditCard />
 			<CreditCard />
 			<CreditCard />
 			<CreditCard />
@@ -80,8 +125,4 @@ const App: React.FC = () => {
 					/>
 				</div>
 			</div>
-		</>
-	);
-};
-
-export default App;
+*/

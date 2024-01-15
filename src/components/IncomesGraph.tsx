@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
 import { Box, CircularProgress, useTheme } from "@mui/material";
-import { API_URL } from "../../../constants";
+import { API_URL } from "../constants";
 import {
 	Chart as ChartJS,
 	CategoryScale,
