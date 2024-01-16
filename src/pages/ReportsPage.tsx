@@ -1,5 +1,6 @@
 import { Grid, Paper, Box } from "@mui/material";
 import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
+import CreditCard from "../components/credit_card/CreditCard";
 
 const ReportsPage = () => {
 	return (
@@ -8,6 +9,14 @@ const ReportsPage = () => {
 				<h1>Reports Page</h1>
 			</div>
 			<Grid container spacing={2} alignItems="center" justifyContent="center">
+				<Grid item xs={12} md={6}>
+					<Paper
+						elevation={0}
+						sx={{ padding: 2, backgroundColor: "transparent" }}
+					>
+						<CreditCard />
+					</Paper>
+				</Grid>
 				<Grid item xs={12} md={6}>
 					<Paper
 						elevation={0}
