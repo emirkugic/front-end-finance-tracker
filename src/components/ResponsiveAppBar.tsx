@@ -16,9 +16,10 @@ import { Link } from "react-router-dom";
 
 const pages = [
 	{ label: "Balance", link: "/balance" },
-	{ label: "Budget", link: "/budget" },
+	// { label: "Budget", link: "/budget" },
 	{ label: "Reports", link: "/reports" },
-	{ label: "Income", link: "/income" },
+	{ label: "Incomes", link: "/income" },
+	{ label: "Expenses", link: "/expenses" },
 ];
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
