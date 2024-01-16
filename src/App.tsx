@@ -21,6 +21,8 @@ import {
 	Link,
 	useLocation,
 } from "react-router-dom";
+import BalancePage from "./pages/BalancePage";
+import IncomePage from "./pages/IncomePage";
 
 const Navigation = () => {
 	const location = useLocation();
@@ -51,6 +53,8 @@ const App = () => {
 				<Routes>
 					<Route path="/profile" element={<UserProfilePage />} />
 					<Route path="/reports" element={<ReportsPage />} />
+					<Route path="/balance" element={<BalancePage />} />
+					<Route path="/income" element={<IncomePage />} />
 				</Routes>
 			</div>
 		</Router>
@@ -89,28 +93,8 @@ export default App;
 
 			<div className="charts">
 				<div>
-					<ExpensesGraph
-						userId={user_id}
-						startDate={"2000-01-01"}
-						endDate={"2100-01-01"}
-						groupBy={"category"}
-					/>
-					<ExpensesPieGraph
-						startDate="2020-01-01"
-						endDate="2100-01-01"
-						parameter="category"
-					/>
-					<ExpensesPieGraph
-						startDate="2020-01-01"
-						endDate="2100-01-01"
-						parameter="source"
-					/>
-					<IncomesGraph
-						userId={user_id}
-						startDate={"2000-01-01"}
-						endDate={"2100-01-01"}
-						groupBy={"from"}
-					/>
+					
+					
 					<IncomesGraph
 						userId={user_id}
 						startDate={"2000-01-01"}
