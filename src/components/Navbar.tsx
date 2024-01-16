@@ -9,6 +9,7 @@ import budgetIcon from "../assets/icons/budget.png";
 import reportsIcon from "../assets/icons/report.png";
 import { Link } from "react-router-dom";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import PaidIcon from "@mui/icons-material/Paid";
 
 const NavbarContainer = styled("div")({
 	width: "64px",
@@ -36,11 +37,9 @@ const NavbarButton = styled(IconButton)({
 	"&:active": {
 		transform: "scale(0.9)",
 	},
-
 	"& *": {
 		userSelect: "none",
 	},
-
 	"&:focus": {
 		outline: "none",
 	},
@@ -66,10 +65,32 @@ const Navbar: React.FC = () => {
 				sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
 			>
 				{[
-					{ icon: calendarIcon, label: "Today", path: "/" },
-					{ icon: balanceIcon, label: "Balance", path: "/balance" },
-					{ icon: budgetIcon, label: "Budget", path: "/budget" },
-					{ icon: reportsIcon, label: "Reports", path: "/reports" },
+					{
+						icon: calendarIcon,
+						label: "Today",
+						path: "/",
+						isImage: true,
+					},
+					{
+						icon: balanceIcon,
+						label: "Balance",
+						path: "/balance",
+						isImage: true,
+					},
+					{ icon: budgetIcon, label: "Budget", path: "/budget", isImage: true },
+					{
+						icon: reportsIcon,
+						label: "Reports",
+						path: "/reports",
+						isImage: true,
+					},
+					{
+						icon: PaidIcon,
+						label: "Incomes",
+						path: "/income",
+						isImage: false,
+						color: "white",
+					},
 				].map((item, index) => (
 					<Box
 						key={index}
@@ -81,7 +102,11 @@ const Navbar: React.FC = () => {
 					>
 						<Link to={item.path} style={{ textDecoration: "none" }}>
 							<NavbarButton>
-								<NavbarIcon src={item.icon} alt={item.label} />
+								{item.isImage ? (
+									<NavbarIcon src={item.icon} alt={item.label} />
+								) : (
+									<item.icon fontSize="large" style={{ color: "white" }} />
+								)}
 							</NavbarButton>
 						</Link>
 						<NavbarText>{item.label}</NavbarText>
@@ -98,7 +123,7 @@ const Navbar: React.FC = () => {
 			>
 				<Link to="/profile" style={{ textDecoration: "none" }}>
 					<NavbarButton>
-						<InsertEmoticonIcon fontSize="large" style={{ color: "black" }} />
+						<InsertEmoticonIcon fontSize="large" style={{ color: "white" }} />
 					</NavbarButton>
 				</Link>
 				<NavbarText>Profile</NavbarText>
@@ -106,4 +131,5 @@ const Navbar: React.FC = () => {
 		</NavbarContainer>
 	);
 };
+
 export default Navbar;
