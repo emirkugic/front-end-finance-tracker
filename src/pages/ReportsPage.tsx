@@ -4,6 +4,9 @@ import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
 const ReportsPage = () => {
 	return (
 		<Box sx={{ flexGrow: 1, padding: 2 }}>
+			<div>
+				<h1>Reports Page</h1>
+			</div>
 			<Grid container spacing={2} alignItems="center" justifyContent="center">
 				<Grid item xs={12} md={6}>
 					<Paper
