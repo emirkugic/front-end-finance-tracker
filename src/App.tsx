@@ -1,63 +1,25 @@
-// import Login from "./components/login/Login";
-// import ExpensesPieGraph from "./components/graphs/expenses/ExpensesPieGraph/ExpensesPieGraph";
-// import IncomesGraph from "./components/graphs/incomes/IncomesGraph";
-// import { user_id } from "./constants";
-// import ExpensesGraph from "./components/graphs/expenses/ExpenseGraph/ExpenseGraph";
-// import ExpensesList from "./components/graphs/expenses/ExpensesList/ExpensesList";
-// import IncomesList from "./components/graphs/incomes/IncomeList/IncomesList";
-// import BalanceGraph from "./components/graphs/FinancialOverviewGraph/BalanceGraph";
-// import ExpenseForm from "./components/graphs/expenses/CreateComponents/ExpenseForm";
-// import Navbar from './components/navbar/Navbar';
-// import CreditCard from "./components/credit_card/CreditCard";
-
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import UserProfilePage from "./pages/UserProfilePage";
 import ReportsPage from "./pages/ReportsPage";
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	Link,
-	useLocation,
-} from "react-router-dom";
 import BalancePage from "./pages/BalancePage";
 import IncomePage from "./pages/IncomePage";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
-
-const Navigation = () => {
-	const location = useLocation();
-	const shouldDisplayNavbar = location.pathname !== "/";
-
-	return (
-		<nav>
-			<ResponsiveAppBar />
-
-			{!shouldDisplayNavbar && <Button />}
-		</nav>
-	);
-};
-
-const Button = () => {
-	return (
-		<Link to="/profile">
-			<button>Go to Profile</button>
-		</Link>
-	);
-};
+import Box from "@mui/material/Box";
+import "./App.css";
 
 const App = () => {
 	return (
 		<Router>
-			<div>
-				<Navigation />
-
+			<Box sx={{ paddingTop: 8 }}>
+				{" "}
+				<ResponsiveAppBar />
 				<Routes>
 					<Route path="/profile" element={<UserProfilePage />} />
 					<Route path="/reports" element={<ReportsPage />} />
 					<Route path="/balance" element={<BalancePage />} />
 					<Route path="/income" element={<IncomePage />} />
 				</Routes>
-			</div>
+			</Box>
 		</Router>
 	);
 };
@@ -66,11 +28,7 @@ export default App;
 
 /*
 <CreditCard />
-			<CreditCard />
-			<CreditCard />
-			<CreditCard />
-			<CreditCard />
-			<Navbar />
+			
 
 			<ExpenseForm />
 			<BalanceGraph
@@ -79,17 +37,7 @@ export default App;
 				endDate={"2024-01-01"}
 			/>
 
-			<IncomesList
-				userId={user_id}
-				startDate={"2000-01-01"}
-				endDate={"2100-01-01"}
-			/>
-
-			<ExpensesList
-				userId={user_id}
-				startDate={"2000-01-01"}
-				endDate={"2100-01-01"}
-			/>
+			
 			<Login />
 
 			<div className="charts">
