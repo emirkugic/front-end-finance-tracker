@@ -1,6 +1,6 @@
 import { Grid, Paper, Box } from "@mui/material";
 import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
-import CreditCard from "../components/credit_card/CreditCard";
+import CreditCard from "../components/CreditCard";
 
 const ReportsPage = () => {
 	return (
