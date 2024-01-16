@@ -13,7 +13,6 @@
 import "./App.css";
 import UserProfilePage from "./pages/UserProfilePage";
 import ReportsPage from "./pages/ReportsPage";
-import Navbar from "./components/Navbar";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -23,6 +22,7 @@ import {
 } from "react-router-dom";
 import BalancePage from "./pages/BalancePage";
 import IncomePage from "./pages/IncomePage";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
 
 const Navigation = () => {
 	const location = useLocation();
@@ -30,7 +30,8 @@ const Navigation = () => {
 
 	return (
 		<nav>
-			<Navbar />
+			<ResponsiveAppBar />
+
 			{!shouldDisplayNavbar && <Button />}
 		</nav>
 	);
