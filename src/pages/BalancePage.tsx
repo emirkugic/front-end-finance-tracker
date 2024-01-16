@@ -1,116 +1,68 @@
-import React, { useState } from "react";
-import { Box, Paper, Typography, Collapse } from "@mui/material";
-import CreditCard from "../components/credit_card/CreditCard";
+import React from "react";
+import { Typography, Button, Paper, Grid, Container } from "@mui/material";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-const BalanceNode = ({ label, amount }) => {
+const BalancePage: React.FC = () => {
 	return (
-		<Box
-			sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-		>
-			<Paper sx={{ padding: 1 }}>
-				<Typography variant="h6">
-					{label}: ${amount}
+		<Container maxWidth="xs">
+			<Paper
+				elevation={3}
+				style={{ padding: "20px", textAlign: "center", marginTop: "20px" }}
+			>
+				<AccountBalanceWalletIcon style={{ fontSize: 40, color: "#003087" }} />
+				<Typography variant="h5" style={{ margin: "10px 0" }}>
+					Total Balance
+				</Typography>
+				<Typography variant="h3" style={{ marginBottom: "10px" }}>
+					0,00 USD
+				</Typography>
+				<Typography variant="subtitle1" style={{ marginBottom: "20px" }}>
+					Estimated total of all currencies
+				</Typography>
+				<Button variant="contained" color="primary" fullWidth>
+					Send payments
+				</Button>
+				<Grid container spacing={2} style={{ marginTop: "20px" }}>
+					<Grid
+						item
+						xs={12}
+						style={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "space-between",
+						}}
+					>
+						<span>Cash Balance</span>
+						<Typography variant="body1">USD 0,00</Typography>
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						style={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "space-between",
+						}}
+					>
+						<span>Card Balance</span>
+						<Typography variant="body1">EUR 0,00</Typography>
+					</Grid>
+				</Grid>
+				<Button fullWidth style={{ marginTop: "20px" }}>
+					Add an income
+				</Button>
+				<Button fullWidth style={{ marginTop: "10px" }}>
+					Add an expense
+				</Button>
+				<Typography
+					variant="caption"
+					display="block"
+					style={{ marginTop: "20px" }}
+				>
+					Sending money to users feature is coming soon
 				</Typography>
 			</Paper>
-			<Box sx={{ width: "2px", height: "20px", backgroundColor: "black" }} />
-		</Box>
-	);
-};
-
-const CreditCardList = ({ cards, showCards }) => {
-	return (
-		<Collapse in={showCards}>
-			{cards.map((card, index) => (
-				<Box key={index} sx={{ marginTop: 1 }}>
-					<CreditCard {...card} />
-				</Box>
-			))}
-		</Collapse>
-	);
-};
-
-const BalanceTree = ({ total, cash, cards }) => {
-	const [showCards, setShowCards] = useState(false);
-
-	return (
-		<Box
-			sx={{
-				padding: 2,
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-			}}
-		>
-			<BalanceNode label="Total Balance" amount={total} />
-			<Box sx={{ display: "flex" }}>
-				<Box sx={{ width: "50%", display: "flex", justifyContent: "center" }}>
-					<Box
-						sx={{
-							marginRight: "-2px",
-							width: "2px",
-							height: "50px",
-							backgroundColor: "black",
-						}}
-					/>
-				</Box>
-				<Box sx={{ width: "50%", display: "flex", justifyContent: "center" }}>
-					<Box
-						sx={{
-							marginLeft: "-2px",
-							width: "2px",
-							height: "50px",
-							backgroundColor: "black",
-						}}
-					/>
-				</Box>
-			</Box>
-			<Box
-				sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
-			>
-				<BalanceNode label="Cash" amount={cash} />
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}
-				>
-					<Box
-						onClick={() => setShowCards(!showCards)}
-						style={{ cursor: "pointer" }}
-					>
-						<BalanceNode
-							label="Credit Cards"
-							amount={cards.reduce((acc, card) => acc + card.amount, 0)}
-						/>
-					</Box>
-					<CreditCardList cards={cards} showCards={showCards} />
-				</Box>
-			</Box>
-		</Box>
-	);
-};
-
-const BalancePage = () => {
-	// Mock data
-	const totalBalance = 1000;
-	const cashBalance = 650;
-	const cardBalances = [
-		{ name: "Card 1", amount: 50 /* ...other props */ },
-		{ name: "Card 2", amount: 400 /* ...other props */ },
-	];
-
-	return (
-		<Box sx={{ flexGrow: 1, padding: 2 }}>
-			<div>
-				<h1>Balance Page</h1>
-				<BalanceTree
-					total={totalBalance}
-					cash={cashBalance}
-					cards={cardBalances}
-				/>
-			</div>
-		</Box>
+		</Container>
 	);
 };
 
