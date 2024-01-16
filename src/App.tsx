@@ -7,6 +7,7 @@ import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import Box from "@mui/material/Box";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
+import ExpensePage from "./pages/ExpensePage";
 
 const App = () => {
 	return (
@@ -19,6 +20,7 @@ const App = () => {
 					<Route path="/reports" element={<ReportsPage />} />
 					<Route path="/balance" element={<BalancePage />} />
 					<Route path="/income" element={<IncomePage />} />
+					<Route path="/expenses" element={<ExpensePage />} />
 					<Route path="/login" element={<LoginPage />} />
 				</Routes>
 			</Box>
