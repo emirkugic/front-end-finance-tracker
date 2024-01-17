@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck"; // Import PriceCheckIcon
 import { Link } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
 
 const pages = [
 	{ label: "Balance", link: "/balance" },
@@ -47,12 +48,18 @@ function ResponsiveAppBar() {
 		setAnchorElUser(null);
 	};
 
+	const logout = useLogout();
+
+	const handleLogout = () => {
+		handleCloseUserMenu();
+		logout();
+	};
+
 	return (
 		<AppBar position="fixed">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<PriceCheckIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />{" "}
-					{/* Replace Android icon with PriceCheckIcon */}
+					<PriceCheckIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
 					<Typography
 						variant="h6"
 						noWrap
@@ -70,6 +77,8 @@ function ResponsiveAppBar() {
 					>
 						Financier
 					</Typography>
+
+					{/* Mobile view menu */}
 					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 						<IconButton
 							size="large"
@@ -108,26 +117,8 @@ function ResponsiveAppBar() {
 							))}
 						</Menu>
 					</Box>
-					<PriceCheckIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />{" "}
-					{/* Replace Android icon with PriceCheckIcon */}
-					<Typography
-						variant="h5"
-						noWrap
-						component={Link}
-						to="/"
-						sx={{
-							mr: 2,
-							display: { xs: "flex", md: "none" },
-							flexGrow: 1,
-							fontFamily: "monospace",
-							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
-							textDecoration: "none",
-						}}
-					>
-						LOGO
-					</Typography>
+
+					{/* Desktop view menu */}
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (
 							<Button
@@ -141,6 +132,7 @@ function ResponsiveAppBar() {
 							</Button>
 						))}
 					</Box>
+
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title="Open settings">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -164,7 +156,12 @@ function ResponsiveAppBar() {
 							onClose={handleCloseUserMenu}
 						>
 							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+								<MenuItem
+									key={setting}
+									onClick={
+										setting === "Logout" ? handleLogout : handleCloseUserMenu
+									}
+								>
 									{setting === "Profile" ? (
 										<Link to="/profile">
 											<Typography textAlign="center">{setting}</Typography>

@@ -1,4 +1,3 @@
-// Login2 component
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../store/authSlice";
@@ -17,7 +16,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import useAuthToken from "../store/useAuthToken"; // Import the custom hook
+import useAuthToken from "../hooks/useAuthToken";
 
 const Login2: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -41,7 +40,7 @@ const Login2: React.FC = () => {
 			setSnackbarOpen(true);
 			navigate("/profile");
 			console.log("Login2 component");
-			console.log("JWT Token:", token); // Log the JWT token
+			console.log("JWT Token:", token);
 		}
 		if (authState.success) {
 			setSnackbarMessage("Registration successful!");
