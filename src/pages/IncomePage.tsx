@@ -10,6 +10,7 @@ const IncomePage: React.FC = () => {
 
 	return (
 		<div>
+			<h1 style={{ color: "black" }}>Incomes</h1>
 			<IncomesList
 				userId={user_id}
 				startDate={"2000-01-01"}

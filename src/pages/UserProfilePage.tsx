@@ -80,6 +80,7 @@ const UserProfilePage = () => {
 			alignItems="center"
 			justifyContent="center"
 			minHeight="100vh"
+			style={{ color: "black" }} // Set the font color to black for the root element
 		>
 			<Container maxWidth="sm">
 				<Avatar
@@ -102,6 +103,7 @@ const UserProfilePage = () => {
 						margin="normal"
 						fullWidth
 						variant="outlined"
+						sx={{ color: "black" }} // Set the font color to black for this TextField
 					/>
 				) : (
 					<Typography
