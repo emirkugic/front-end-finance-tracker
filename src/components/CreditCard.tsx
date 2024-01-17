@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useState, useEffect } from "react";
 import useFetchUserData from "../hooks/useFetchUserData";
-import { useEffect, useState } from "react";
 
 const Card = styled(Box)<{ pattern: string }>(({ pattern }) => ({
 	width: 345,
@@ -107,14 +107,14 @@ const CreditCard = ({ card }) => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-start", fontSize: "1.25rem" }}
 				>
-					{userName} {/* Display the user's name */}
+					{userName}
 				</Typography>
 				<Typography
 					variant="body1"
 					color="text.secondary"
 					sx={{ alignSelf: "flex-start", fontSize: "1rem" }}
 				>
-					{card.cardName} {/* Display the card name */}
+					{card.cardName}
 				</Typography>
 			</TopSection>
 			<BottomSection>
@@ -124,7 +124,7 @@ const CreditCard = ({ card }) => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-end", fontSize: "1.5rem" }}
 				>
-					${card.balance.toFixed(2)} {/* Display the card balance */}
+					${card.balance.toFixed(2)}
 				</Typography>
 				<Typography
 					variant="h6"
@@ -132,8 +132,7 @@ const CreditCard = ({ card }) => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-end", fontSize: "1.25rem" }}
 				>
-					{card.cardNumber.slice(-4)}{" "}
-					{/* Display the last 4 digits of the card number */}
+					{card.cardNumber.slice(-4)}
 				</Typography>
 			</BottomSection>
 		</Card>
