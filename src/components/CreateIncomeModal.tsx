@@ -53,7 +53,7 @@ const CreateIncomeModal = ({ onClose }) => {
 
 	return (
 		<div div style={{ position: "fixed", bottom: "16px", right: "16px" }}>
-			<Fab color="success" aria-label="add" onClick={handleClickOpen}>
+			<Fab color="primary" aria-label="add" onClick={handleClickOpen}>
 				<AddIcon />
 			</Fab>
 			<Dialog open={open} onClose={handleClose}>

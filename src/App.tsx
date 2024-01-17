@@ -13,7 +13,6 @@ const App = () => {
 	return (
 		<Router>
 			<Box sx={{ paddingTop: 8 }}>
-				{" "}
 				<ResponsiveAppBar />
 				<Routes>
 					<Route path="/profile" element={<UserProfilePage />} />
