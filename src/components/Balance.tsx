@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Button, Paper, Grid, Container } from "@mui/material";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import useFetchUserData from "../hooks/useFetchUserData";
+import useCreditCardBalances from "../hooks/useCreditCardBalances";
+import useAuthToken from "../hooks/useAuthToken";
+import { jwtDecode } from "jwt-decode";
 
 const Balance = () => {
+	const token = useAuthToken();
+	const [userId, setUserId] = useState(null);
+
+	useEffect(() => {
+		if (token) {
+			const decoded = jwtDecode(token);
+			setUserId(decoded.userId);
+		}
+	}, [token]);
+
+	const {
+		userData,
+		loading: userLoading,
+		error: userError,
+	} = useFetchUserData(userId);
+	const {
+		balances: cardBalance,
+		loading: cardLoading,
+		error: cardError,
+	} = useCreditCardBalances(userId);
+
+	if (userLoading || cardLoading) return <div>Loading...</div>;
+	if (userError || cardError) return <div>Error: {userError || cardError}</div>;
+
+	const totalUserBalance = userData?.balance || 0;
+	const totalCardBalance = parseFloat(cardBalance) || 0;
+	const cashBalance = totalUserBalance - totalCardBalance;
+
 	return (
 		<Container maxWidth="xs">
 			<Paper
@@ -14,7 +46,7 @@ const Balance = () => {
 					Total Balance
 				</Typography>
 				<Typography variant="h3" style={{ marginBottom: "10px" }}>
-					0,00 USD
+					${totalUserBalance.toFixed(2)} USD
 				</Typography>
 				<Typography variant="subtitle1" style={{ marginBottom: "20px" }}>
 					Estimated total of all currencies
@@ -33,7 +65,9 @@ const Balance = () => {
 						}}
 					>
 						<span>Cash Balance</span>
-						<Typography variant="body1">USD 0,00</Typography>
+						<Typography variant="body1">
+							USD ${cashBalance.toFixed(2)}
+						</Typography>
 					</Grid>
 					<Grid
 						item
@@ -45,7 +79,9 @@ const Balance = () => {
 						}}
 					>
 						<span>Card Balance</span>
-						<Typography variant="body1">USD 0,00</Typography>
+						<Typography variant="body1">
+							USD ${totalCardBalance.toFixed(2)}
+						</Typography>
 					</Grid>
 				</Grid>
 				<Button fullWidth style={{ marginTop: "20px" }}>

@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import useFetchUserData from "../hooks/useFetchUserData";
+import { useEffect, useState } from "react";
 
 const Card = styled(Box)<{ pattern: string }>(({ pattern }) => ({
 	width: 345,
@@ -84,8 +86,17 @@ const generateWavyPattern = (): string => {
   `;
 };
 
-const CreditCard = () => {
+const CreditCard = ({ card }) => {
+	const { userData } = useFetchUserData(card.userId);
 	const pattern = generateWavyPattern();
+
+	const [userName, setUserName] = useState("");
+
+	useEffect(() => {
+		if (userData) {
+			setUserName(`${userData.name} ${userData.surname}`);
+		}
+	}, [userData]);
 
 	return (
 		<Card pattern={pattern}>
@@ -96,14 +107,14 @@ const CreditCard = () => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-start", fontSize: "1.25rem" }}
 				>
-					John Smith
+					{userName} {/* Display the user's name */}
 				</Typography>
 				<Typography
 					variant="body1"
 					color="text.secondary"
 					sx={{ alignSelf: "flex-start", fontSize: "1rem" }}
 				>
-					Amazon Platinum
+					{card.cardName} {/* Display the card name */}
 				</Typography>
 			</TopSection>
 			<BottomSection>
@@ -113,7 +124,7 @@ const CreditCard = () => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-end", fontSize: "1.5rem" }}
 				>
-					$3,469.52
+					${card.balance.toFixed(2)} {/* Display the card balance */}
 				</Typography>
 				<Typography
 					variant="h6"
@@ -121,7 +132,8 @@ const CreditCard = () => {
 					color="text.primary"
 					sx={{ alignSelf: "flex-end", fontSize: "1.25rem" }}
 				>
-					9018
+					{card.cardNumber.slice(-4)}{" "}
+					{/* Display the last 4 digits of the card number */}
 				</Typography>
 			</BottomSection>
 		</Card>
