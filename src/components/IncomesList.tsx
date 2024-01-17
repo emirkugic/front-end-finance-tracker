@@ -331,7 +331,14 @@ const IncomesList: React.FC<IncomesListProps> = ({
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "flex-end",
+					p: 2,
+					color: "black",
+				}}
+			>
 				<Typography variant="subtitle1">
 					Total: {formatCurrency(totalAmount)}
 				</Typography>
