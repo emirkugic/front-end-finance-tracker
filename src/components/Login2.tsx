@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+// Login2 component
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, registerUser } from "../store/authSlice";
 import {
 	Box,
 	Button,
@@ -13,9 +16,10 @@ import {
 	Snackbar,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { API_URL } from "../constants";
+import { useNavigate } from "react-router-dom";
+import useAuthToken from "../store/useAuthToken"; // Import the custom hook
 
-const Login: React.FC = () => {
+const Login2: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
@@ -25,66 +29,45 @@ const Login: React.FC = () => {
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState("");
 
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const authState = useSelector((state) => state.auth);
+	const token = useAuthToken();
+
+	useEffect(() => {
+		if (authState.userToken) {
+			localStorage.setItem("jwtToken", authState.userToken);
+			setSnackbarMessage("Login successful!");
+			setSnackbarOpen(true);
+			navigate("/profile");
+			console.log("Login2 component");
+			console.log("JWT Token:", token); // Log the JWT token
+		}
+		if (authState.success) {
+			setSnackbarMessage("Registration successful!");
+			setSnackbarOpen(true);
+			setIsRegistering(false);
+		}
+		if (authState.error) {
+			setSnackbarMessage(authState.error);
+			setSnackbarOpen(true);
+		}
+	}, [authState, navigate, token]);
+
+	const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		dispatch(loginUser({ email, password }));
+	};
+
+	const handleRegisterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		dispatch(registerUser({ firstName, lastName, email, password }));
+	};
+
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		event.preventDefault();
-	};
-
-	const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		try {
-			const response = await fetch(`${API_URL}/auth/login`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				credentials: "include",
-				body: JSON.stringify({ email, password }),
-			});
-			const data = await response.json();
-			if (response.ok) {
-				console.log("JWT Token:", data.jwt);
-				setSnackbarMessage("Login successful!");
-			} else {
-				setSnackbarMessage(data.message || "Login failed!");
-			}
-		} catch (error) {
-			setSnackbarMessage("Network error!");
-		}
-		setSnackbarOpen(true);
-	};
-
-	const handleRegisterSubmit = async (
-		event: React.FormEvent<HTMLFormElement>
-	) => {
-		event.preventDefault();
-
-		try {
-			const response = await fetch(`${API_URL}/auth/register`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					userType: "USER",
-					firstName,
-					lastName,
-					email,
-					password,
-				}),
-			});
-			const data = await response.json();
-			if (response.ok) {
-				setIsRegistering(false); // go back to the login page when successful registration
-				setSnackbarMessage("Registration successful! Please login.");
-			} else {
-				setSnackbarMessage(data.message || "Registration failed!");
-			}
-		} catch (error) {
-			setSnackbarMessage("Network error!");
-		}
-		setSnackbarOpen(true);
 	};
 
 	const handleCloseSnackbar = () => {
@@ -98,7 +81,7 @@ const Login: React.FC = () => {
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
-					my: 4, // This adds margin to top and bottom
+					my: 4,
 				}}
 			>
 				<Paper
@@ -238,4 +221,4 @@ const Login: React.FC = () => {
 	);
 };
 
-export default Login;
+export default Login2;
