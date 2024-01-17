@@ -8,6 +8,8 @@ import Box from "@mui/material/Box";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import ExpensePage from "./pages/ExpensePage";
+import NotFound from "./pages/NotFound";
+import LoginPage2 from "./pages/LoginPage2";
 
 const App = () => {
 	return (
@@ -21,6 +23,9 @@ const App = () => {
 					<Route path="/income" element={<IncomePage />} />
 					<Route path="/expenses" element={<ExpensePage />} />
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/login2" element={<LoginPage2 />} />
+
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Box>
 		</Router>
