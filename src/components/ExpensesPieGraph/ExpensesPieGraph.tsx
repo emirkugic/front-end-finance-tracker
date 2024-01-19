@@ -7,7 +7,7 @@ import styles from "./ExpensesPieGraph.module.css";
 import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { ChartOptions } from "chart.js";
-import { user_id } from "../../constants";
+import useAuthToken from "../../hooks/useAuthToken";
 
 import {
 	Chart as ChartJS,
@@ -94,13 +94,23 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 		return processedData;
 	};
 
+	const token = useAuthToken();
+	const [userId, setUserId] = useState("");
+
+	useEffect(() => {
+		if (token) {
+			const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+			setUserId(tokenPayload.userId);
+		}
+	}, [token]);
+
 	const fetchData = async () => {
 		try {
 			const response = await axios.get(
 				"http://localhost:8080/api/expenses/getBetweenDates",
 				{
 					params: {
-						userId: user_id,
+						userId: userId,
 						startDate: startDate,
 						endDate: endDate,
 					},
