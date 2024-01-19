@@ -1,6 +1,6 @@
 import { Grid, Paper, Box } from "@mui/material";
 import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
-import CreditCard from "../components/CreditCard";
+import CombinedDataList from "../components/CombinedDataList";
 
 const ReportsPage = () => {
 	return (
@@ -17,15 +17,19 @@ const ReportsPage = () => {
 						component. TLDR: make a component that will list spending and
 						earnings in one list together
 					</h4>
+
+					<CombinedDataList
+						userId={"6549031fc02fd9204841b306"}
+						startDate="2020-01-01"
+						endDate="2100-01-01"
+					/>
 				</div>
 				<Grid container spacing={2} alignItems="center" justifyContent="center">
 					<Grid item xs={12} md={6}>
 						<Paper
 							elevation={0}
 							sx={{ padding: 2, backgroundColor: "transparent" }}
-						>
-							<CreditCard />
-						</Paper>
+						></Paper>
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Paper
