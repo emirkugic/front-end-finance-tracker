@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL } from "../constants";
+import { API_URL } from "../../constants";
 
 // Define a TypeScript interface for the payload
 interface LoginPayload {

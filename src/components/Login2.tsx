@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, registerUser } from "../store/authSlice";
+import { loginUser, registerUser } from "../pages/store/authSlice";
 import {
 	Box,
 	Button,
