@@ -47,14 +47,13 @@ const useFetchAndCombineData = (
 					type: "income" as TransactionType,
 				}));
 
-				// combine and sorts by date
 				const combined = [...transformedExpenses, ...transformedIncomes].sort(
-					(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+					(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 				);
 
 				setCombinedData(combined);
 			} catch (error) {
-				console.error("Error fetching and combining data:", error);
+				console.log("Error fetching and combining data:", error);
 			}
 		};
 

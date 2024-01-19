@@ -51,7 +51,7 @@ const CombinedDataList: React.FC<CombinedDataListProps> = ({
 					[cardId]: response.data || "Unknown Card",
 				}));
 			} catch (error) {
-				console.error("Error fetching card name:", error);
+				console.log("Error fetching card name:", error);
 				setCardNames((prevCardNames) => ({
 					...prevCardNames,
 					[cardId]: "Unknown Card",
