@@ -47,7 +47,7 @@ const CreateIncomeModal = ({ onClose }) => {
 			console.log(response.data);
 			handleClose();
 		} catch (error) {
-			console.error("Error posting income data:", error);
+			console.log("Error posting income data:", error);
 		}
 	};
 

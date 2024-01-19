@@ -72,7 +72,7 @@ const IncomesList: React.FC<IncomesListProps> = ({
 								income.receivedThrough =
 									cardNameResponse.data || "Unknown Card";
 							} catch (error) {
-								console.error("Error fetching card name:", error);
+								console.log("Error fetching card name:", error);
 								income.receivedThrough = "Unknown Card";
 							}
 						}
@@ -94,7 +94,7 @@ const IncomesList: React.FC<IncomesListProps> = ({
 					Array.from(new Set(incomesWithCardNames.map((i) => i.from)))
 				);
 			} catch (error) {
-				console.error("Error fetching incomes:", error);
+				console.log("Error fetching incomes:", error);
 			}
 		};
 

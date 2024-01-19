@@ -45,7 +45,7 @@ const CreateExpenseModal = ({ onClose }) => {
 			console.log(response.data);
 			handleClose();
 		} catch (error) {
-			console.error("Error posting expense data:", error);
+			console.log("Error posting expense data:", error);
 		}
 	};
 

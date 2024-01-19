@@ -69,7 +69,7 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 			);
 			return response.data;
 		} catch (error) {
-			console.error("Error fetching card name:", error);
+			console.log("Error fetching card name:", error);
 			return cardId;
 		}
 	};
@@ -122,7 +122,7 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 				],
 			});
 		} catch (error) {
-			console.error("Error fetching expenses data:", error);
+			console.log("Error fetching expenses data:", error);
 		}
 	};
 

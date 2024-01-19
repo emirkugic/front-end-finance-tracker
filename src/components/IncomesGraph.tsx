@@ -62,7 +62,7 @@ const IncomesGraph: React.FC<IncomesGraphProps> = ({
 				setIncomeData(response.data);
 				setLoading(false);
 			} catch (error) {
-				console.error("Error fetching income data:", error);
+				console.log("Error fetching income data:", error);
 				setLoading(false);
 			}
 		};

@@ -68,7 +68,7 @@ const ExpensesGraph: React.FC<ExpensesGraphProps> = ({
 				setExpenseData(response.data);
 				setLoading(false);
 			} catch (error) {
-				console.error("Error fetching expense data:", error);
+				console.log("Error fetching expense data:", error);
 				setLoading(false);
 			}
 		};

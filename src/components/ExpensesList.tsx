@@ -70,7 +70,7 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 								);
 								expense.source = cardNameResponse.data || "Unknown Card";
 							} catch (error) {
-								console.error("Error fetching card name:", error);
+								console.log("Error fetching card name:", error);
 								expense.source = "Unknown Card";
 							}
 						}
@@ -84,7 +84,7 @@ const ExpensesList: React.FC<ExpensesListProps> = ({
 					Array.from(new Set(expensesWithCardNames.map((e) => e.source)))
 				);
 			} catch (error) {
-				console.error("Error fetching expenses:", error);
+				console.log("Error fetching expenses:", error);
 			}
 		};
 

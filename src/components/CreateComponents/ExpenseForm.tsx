@@ -28,7 +28,7 @@ const ExpenseForm: React.FC = () => {
 				setCreditCards(data);
 			})
 			.catch((error) => {
-				console.error("Error fetching credit cards:", error);
+				console.log("Error fetching credit cards:", error);
 			});
 
 		// Fetch existing expense categories from the API
@@ -41,7 +41,7 @@ const ExpenseForm: React.FC = () => {
 				setExistingCategories(uniqueCategories);
 			})
 			.catch((error) => {
-				console.error("Error fetching existing categories:", error);
+				console.log("Error fetching existing categories:", error);
 			});
 	}, []);
 
