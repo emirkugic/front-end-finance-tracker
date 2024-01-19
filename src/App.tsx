@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import ExpensePage from "./pages/ExpensePage";
 import NotFound from "./pages/NotFound";
 import LoginPage2 from "./pages/LoginPage2";
+import AdminPage from "./pages/AdminPage";
 
 const App = () => {
 	return (
@@ -24,6 +25,7 @@ const App = () => {
 					<Route path="/expenses" element={<ExpensePage />} />
 					{/* <Route path="/login" element={<LoginPage />} /> */}
 					<Route path="/login" element={<LoginPage2 />} />
+					<Route path="/admin" element={<AdminPage />} />
 
 					<Route path="*" element={<NotFound />} />
 				</Routes>
@@ -35,10 +37,8 @@ const App = () => {
 export default App;
 
 /*
-<CreditCard />
 			
 
-			<ExpenseForm />
 			<BalanceGraph
 				userId={user_id}
 				startDate={"2023-10-10"}
@@ -46,10 +46,6 @@ export default App;
 			/>
 
 			
-			<Login />
-
-			<div className="charts">
-				<div>
 					
 					
 					<IncomesGraph
@@ -65,5 +61,5 @@ export default App;
 						groupBy={"receivedThrough"}
 					/>
 				</div>
-			</div>
+			
 */

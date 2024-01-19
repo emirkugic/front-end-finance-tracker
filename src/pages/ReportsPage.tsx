@@ -4,6 +4,8 @@ import ExpensesPieGraph from "../components/ExpensesPieGraph/ExpensesPieGraph";
 import CombinedDataList from "../components/CombinedDataList";
 import useAuthToken from "../hooks/useAuthToken";
 import IncomePie from "../components/IncomePie";
+import IncomesGraph from "../components/IncomesGraph";
+import BalanceGraph from "../components/BalanceGraph";
 
 const ReportsPage = () => {
 	const token = useAuthToken();
@@ -18,6 +20,12 @@ const ReportsPage = () => {
 
 	return (
 		<>
+			{/* ovo onaj bar chart sto ne izgleda najbolje */}
+			{/* <BalanceGraph
+				userId={userId}
+				startDate={"2023-10-10"}
+				endDate={"2024-01-01"}
+			/> */}
 			<Box sx={{ flexGrow: 1, padding: 2 }}>
 				<Typography
 					variant="h4"
@@ -44,6 +52,13 @@ const ReportsPage = () => {
 							/>
 						</Paper>
 					</Grid>
+
+					{/* <IncomesGraph
+						userId={userId}
+						startDate={"2000-01-01"}
+						endDate={"2100-01-01"}
+						groupBy={"receivedThrough"}
+					/> */}
 					<Grid item xs={12} md={4}>
 						<Paper
 							elevation={0}

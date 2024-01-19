@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../constants";
 
-// Define a TypeScript interface for the payload
 interface LoginPayload {
 	email: string;
 	password: string;
@@ -28,7 +27,6 @@ export const loginUser = createAsyncThunk(
 	}
 );
 
-// Define a TypeScript interface for the registration payload
 interface RegisterPayload {
 	firstName: string;
 	lastName: string;
@@ -79,8 +77,8 @@ const authSlice = createSlice({
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.loading = false;
-				state.userInfo = action.payload.user; // adjust according to your API response
-				state.userToken = action.payload.jwt; // adjust according to your API response
+				state.userInfo = action.payload.user;
+				state.userToken = action.payload.jwt;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.loading = false;
@@ -92,14 +90,13 @@ const authSlice = createSlice({
 			})
 			.addCase(registerUser.fulfilled, (state, action) => {
 				state.loading = false;
-				state.userInfo = action.payload.user; // adjust according to your API response
+				state.userInfo = action.payload.user;
 				state.success = true;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload;
 			});
-		// Add cases for registerUser similarly
 	},
 });
 

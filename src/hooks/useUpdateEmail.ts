@@ -24,8 +24,6 @@ const useUpdateEmail = () => {
 			if (!response.ok) {
 				throw new Error("Failed to update email");
 			}
-
-			// Handle response
 		} catch (err) {
 			setError(err.message || "Unknown error");
 		} finally {
