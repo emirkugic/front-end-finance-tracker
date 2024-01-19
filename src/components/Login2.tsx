@@ -38,7 +38,7 @@ const Login2: React.FC = () => {
 			localStorage.setItem("jwtToken", authState.userToken);
 			setSnackbarMessage("Login successful!");
 			setSnackbarOpen(true);
-			navigate("/profile");
+			navigate("/");
 			console.log("Login2 component");
 			console.log("JWT Token:", token);
 		}
