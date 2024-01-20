@@ -3,9 +3,7 @@ import {
 	Box,
 	Container,
 	Typography,
-	Avatar,
 	Button,
-	Grid,
 	TextField,
 	IconButton,
 	Input,
@@ -22,6 +20,7 @@ import useFetchUserData from "../hooks/useFetchUserData";
 import useAuthToken from "../hooks/useAuthToken";
 import { jwtDecode } from "jwt-decode";
 import useUpdateNameSurname from "../hooks/useUpdateNameSurname";
+import ProfileImage from "../components/ProfileImage";
 
 interface DecodedJwt {
 	userId: string;
@@ -50,12 +49,13 @@ const UserProfilePage = () => {
 	const [isResetPasswordOpen, setResetPasswordOpen] = useState(false);
 	const { updateNameSurname } = useUpdateNameSurname();
 
-	const [image, setImage] = useState("/url-to-image");
+	const [image, setImage] = useState("");
 
 	useEffect(() => {
 		if (userData) {
 			setName(`${userData.name} ${userData.surname}`);
 			setEmail(userData.username);
+			setImage(userData.profilePictureUrl);
 		}
 	}, [userData]);
 
@@ -64,10 +64,10 @@ const UserProfilePage = () => {
 	const handleSaveClick = async () => {
 		if (!userId) return;
 
-		const [newName, newSurname] = tempName.split(" "); // Assuming tempName is in 'Name Surname' format
+		const [newName, newSurname] = tempName.split(" ");
 		await updateNameSurname(userId, newName, newSurname);
 
-		setName(tempName); // Update the local state to reflect the new name
+		setName(tempName);
 		setEditable(false);
 	};
 
@@ -108,11 +108,7 @@ const UserProfilePage = () => {
 			minHeight="100vh"
 		>
 			<Container maxWidth="sm">
-				<Avatar
-					alt={name}
-					src={image}
-					sx={{ width: 150, height: 150, mx: "auto" }}
-				/>
+				<ProfileImage />
 				{isEditable && (
 					<Input
 						type="file"
@@ -189,19 +185,6 @@ const UserProfilePage = () => {
 						</Button>
 					</DialogActions>
 				</Dialog>
-
-				<Grid container spacing={2} justifyContent="center">
-					<Grid item>
-						<Button
-							variant="contained"
-							color="error"
-							sx={{ borderRadius: "20px" }}
-							onClick={openModal}
-						>
-							DELETE ACCOUNT
-						</Button>
-					</Grid>
-				</Grid>
 
 				<ConfirmationModal
 					isOpen={isModalOpen}
