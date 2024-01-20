@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -9,36 +9,41 @@ import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useFetchAllUsers from "../hooks/useFetchAllUsers";
+import useDeleteUser from "../hooks/useDeleteUser";
+import useLogout from "../hooks/useLogout";
 import UserCard from "./UserCard";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const ListUsers = () => {
 	const { users, loading, error } = useFetchAllUsers();
+	const { deleteUser } = useDeleteUser();
+	const logout = useLogout();
 	const [searchTerm, setSearchTerm] = useState("");
+	const [usersList, setUsersList] = useState(users || []);
 
 	const theme = useTheme();
 	const isXs = useMediaQuery(theme.breakpoints.down("sm"));
 
-	const handleDeleteUser = (userId: string) => {
-		console.log("Deleted user with ID:", userId);
+	const handleDeleteUser = async (userId: string) => {
+		await deleteUser(userId);
+		setUsersList(usersList.filter((user) => user.id !== userId));
 	};
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
 
-	const handleLogout = () => {
-		console.log("Logging out...");
-	};
+	useEffect(() => {
+		setUsersList(users);
+	}, [users]);
 
-	const filteredUsers =
-		users?.filter(
-			(user) =>
-				user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				user.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				user.id?.toLowerCase().includes(searchTerm.toLowerCase())
-		) || [];
+	const filteredUsers = usersList.filter(
+		(user) =>
+			user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			user.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			user.id?.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	if (loading) return <h2>Loading...</h2>;
 	if (error) return <p>Error: {error}</p>;
@@ -67,7 +72,7 @@ const ListUsers = () => {
 						<Button
 							color="inherit"
 							startIcon={<LogoutIcon />}
-							onClick={handleLogout}
+							onClick={logout}
 							sx={{ marginLeft: 2 }}
 						>
 							Logout
@@ -80,7 +85,10 @@ const ListUsers = () => {
 					<Grid container spacing={2}>
 						{filteredUsers.map((user) => (
 							<Grid item xs={12} sm={6} md={4} key={user.id}>
-								<UserCard user={user} onDelete={handleDeleteUser} />
+								<UserCard
+									user={user}
+									onDelete={() => handleDeleteUser(user.id)}
+								/>
 							</Grid>
 						))}
 					</Grid>
