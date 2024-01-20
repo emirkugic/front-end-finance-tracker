@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {
 	Box,
@@ -13,7 +13,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DateTimePicker } from "@mui/lab";
 import AddIcon from "@mui/icons-material/Add";
 import { API_URL } from "../constants";
-import { user_id } from "../constants";
+import useAuthToken from "../hooks/useAuthToken";
 
 const CreateExpenseModal = ({ onClose }) => {
 	const [amount, setAmount] = useState(0);
@@ -31,10 +31,20 @@ const CreateExpenseModal = ({ onClose }) => {
 		if (onClose) onClose();
 	};
 
+	const token = useAuthToken();
+	const [userId, setUserId] = useState("");
+
+	useEffect(() => {
+		if (token) {
+			const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+			setUserId(tokenPayload.userId);
+		}
+	}, [token]);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const expenseData = {
-			userId: user_id,
+			userId: userId,
 			amount,
 			category,
 			source,
