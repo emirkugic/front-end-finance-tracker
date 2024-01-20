@@ -137,9 +137,6 @@ const Login2: React.FC = () => {
 							<Button onClick={() => setIsRegistering(true)} size="large">
 								Need an account? Register
 							</Button>
-							<Typography variant="body2" sx={{ mt: 2, cursor: "pointer" }}>
-								Forgot Password?
-							</Typography>
 						</form>
 					) : (
 						<form onSubmit={handleRegisterSubmit}>

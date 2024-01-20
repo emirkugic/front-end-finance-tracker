@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
 	Box,
@@ -7,11 +8,6 @@ import {
 	TextField,
 	IconButton,
 	Input,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -21,6 +17,7 @@ import useAuthToken from "../hooks/useAuthToken";
 import { jwtDecode } from "jwt-decode";
 import useUpdateNameSurname from "../hooks/useUpdateNameSurname";
 import ProfileImage from "../components/ProfileImage";
+import ResetPasswordModal from "../components/ResetPasswordModal";
 
 interface DecodedJwt {
 	userId: string;
@@ -79,18 +76,11 @@ const UserProfilePage = () => {
 		setImage(imageUrl);
 	};
 
-	const openModal = () => setModalOpen(true);
-
 	const closeModal = () => setModalOpen(false);
 
 	const openResetPasswordDialog = () => setResetPasswordOpen(true);
 
 	const closeResetPasswordDialog = () => setResetPasswordOpen(false);
-
-	const handleResetPassword = () => {
-		console.log("Password reset process initiated.");
-		closeResetPasswordDialog();
-	};
 
 	const handleDeleteAccount = () => {
 		console.log("Account deletion process initiated.");
@@ -169,22 +159,10 @@ const UserProfilePage = () => {
 					</Button>
 				</Box>
 
-				<Dialog open={isResetPasswordOpen} onClose={closeResetPasswordDialog}>
-					<DialogTitle>Reset Password</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Are you sure you want to reset your password?
-						</DialogContentText>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={closeResetPasswordDialog} color="primary">
-							Cancel
-						</Button>
-						<Button onClick={handleResetPassword} color="primary" autoFocus>
-							Yes, reset
-						</Button>
-					</DialogActions>
-				</Dialog>
+				<ResetPasswordModal
+					isOpen={isResetPasswordOpen}
+					onClose={closeResetPasswordDialog}
+				/>
 
 				<ConfirmationModal
 					isOpen={isModalOpen}
