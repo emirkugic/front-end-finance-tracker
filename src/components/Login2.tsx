@@ -52,30 +52,30 @@ const Login2: React.FC = () => {
 			setSnackbarMessage("Login successful!");
 			setSnackbarOpen(true);
 
-			const isAdmin =
-				userData.userType === "ADMIN" ||
-				userData.authorities?.some((auth) => auth.authority === "ADMIN");
+			navigate("/admin");
 
-			if (isAdmin) {
-				navigate("/admin");
-				console.log("ADMIN IS TRUE");
-			} else {
-				navigate("/profile");
-			}
+			// if (userData) {
+			// 	const isAdmin =
+			// 		userData.userType === "ADMIN" ||
+			// 		userData.authorities?.some((auth) => auth.authority === "ADMIN");
 
-			console.log("Login2 component");
-			console.log("JWT Token:", token);
+			// 	if (isAdmin) {
+			// 		navigate("/admin");
+			// 	} else {
+			// 		navigate("/profile");
+			// 	}
+			// }
+		} else if (authState.error) {
+			setSnackbarMessage(authState.error);
+			setSnackbarOpen(true);
 		}
+
 		if (authState.success) {
 			setSnackbarMessage("Registration successful!");
 			setSnackbarOpen(true);
 			setIsRegistering(false);
 		}
-		if (authState.error) {
-			setSnackbarMessage(authState.error);
-			setSnackbarOpen(true);
-		}
-	}, [authState, navigate, token, userData]);
+	}, [authState, navigate, userData]);
 
 	const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
