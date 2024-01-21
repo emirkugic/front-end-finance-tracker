@@ -51,9 +51,7 @@ const Balance = () => {
 				<Typography variant="subtitle1" style={{ marginBottom: "20px" }}>
 					Estimated total of all currencies
 				</Typography>
-				<Button variant="contained" color="primary" fullWidth>
-					Send payments
-				</Button>
+
 				<Grid container spacing={2} style={{ marginTop: "20px" }}>
 					<Grid
 						item
@@ -84,12 +82,6 @@ const Balance = () => {
 						</Typography>
 					</Grid>
 				</Grid>
-				<Button fullWidth style={{ marginTop: "20px" }}>
-					Add an income
-				</Button>
-				<Button fullWidth style={{ marginTop: "10px" }}>
-					Add an expense
-				</Button>
 				<Typography
 					variant="caption"
 					display="block"
