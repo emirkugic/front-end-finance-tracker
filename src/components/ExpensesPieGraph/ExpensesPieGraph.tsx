@@ -137,8 +137,10 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 	};
 
 	useEffect(() => {
-		fetchData();
-	}, [startDate, endDate, parameter]);
+		if (userId) {
+			fetchData();
+		}
+	}, [userId, startDate, endDate, parameter]);
 
 	const options: ChartOptions<"pie"> = {
 		plugins: {
