@@ -13,7 +13,7 @@ const CreateCardModal = ({ open, onClose, userId }) => {
 	const [cardName, setCardName] = useState("");
 	const [cardNumber, setCardNumber] = useState("");
 	const [expiryDate, setExpiryDate] = useState("");
-	const [balance, setBalance] = useState("");
+	const [balance] = useState("");
 	const { createCard } = useCreateCard();
 
 	const handleSubmit = async () => {
@@ -59,7 +59,7 @@ const CreateCardModal = ({ open, onClose, userId }) => {
 					value={expiryDate}
 					onChange={(e) => setExpiryDate(e.target.value)}
 				/>
-				<TextField
+				{/* <TextField
 					margin="dense"
 					label="Balance"
 					type="number"
@@ -67,7 +67,7 @@ const CreateCardModal = ({ open, onClose, userId }) => {
 					variant="outlined"
 					value={balance}
 					onChange={(e) => setBalance(e.target.value)}
-				/>
+				/> */}
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose}>Cancel</Button>
