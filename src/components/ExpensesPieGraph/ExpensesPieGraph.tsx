@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ExpensesPieGraph.module.css";
@@ -8,6 +5,7 @@ import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { ChartOptions } from "chart.js";
 import useAuthToken from "../../hooks/useAuthToken";
+import { API_URL } from "../../constants";
 
 import {
 	Chart as ChartJS,
@@ -65,7 +63,12 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 	const getCardName = async (cardId: string): Promise<string> => {
 		try {
 			const response = await axios.get(
-				`http://localhost:8080/api/credit-cards/getCardName/${cardId}`
+				`${API_URL}/credit-cards/getCardName/${cardId}`,
+				{
+					headers: {
+						Authorization: `Bearer ${useAuthToken()}`,
+					},
+				}
 			);
 			return response.data;
 		} catch (error) {
@@ -75,7 +78,7 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 	};
 
 	const processExpenses = async (expenses: any[], param: string) => {
-		let processedData: Record<string, number> = {};
+		const processedData: Record<string, number> = {};
 		for (const expense of expenses) {
 			const value = expense[param];
 			const amount = expense.amount;
@@ -106,16 +109,16 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 
 	const fetchData = async () => {
 		try {
-			const response = await axios.get(
-				"http://localhost:8080/api/expenses/getBetweenDates",
-				{
-					params: {
-						userId: userId,
-						startDate: startDate,
-						endDate: endDate,
-					},
-				}
-			);
+			const response = await axios.get(`${API_URL}/expenses/getBetweenDates`, {
+				params: {
+					userId: userId,
+					startDate: startDate,
+					endDate: endDate,
+				},
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
 
 			const processedData = await processExpenses(
 				response.data,
@@ -161,11 +164,11 @@ const ExpensesPieGraph: React.FC<ExpensesPieGraphProps> = ({
 					size: 14,
 				},
 				formatter: (value: number, context: any) => {
-					let sum = context.chart.data.datasets[0].data.reduce(
+					const sum = context.chart.data.datasets[0].data.reduce(
 						(a: number, b: number) => a + b,
 						0
 					);
-					let percentage = ((value * 100) / sum).toFixed(2) + "%";
+					const percentage = ((value * 100) / sum).toFixed(2) + "%";
 					return percentage;
 				},
 				textStrokeColor: "#fff",

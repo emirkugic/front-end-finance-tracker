@@ -1,8 +1,7 @@
-// hooks/useUpdateNameSurname.js
 import { useState } from "react";
 import useAuthToken from "./useAuthToken";
 
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../constants";
 
 const useUpdateNameSurname = () => {
 	const [loading, setLoading] = useState(false);
@@ -24,8 +23,6 @@ const useUpdateNameSurname = () => {
 			if (!response.ok) {
 				throw new Error("Failed to update name and surname");
 			}
-
-			// Handle response
 		} catch (err) {
 			setError(err.message || "Unknown error");
 		} finally {
