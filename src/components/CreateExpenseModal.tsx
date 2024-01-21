@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
 	Box,
@@ -8,31 +8,30 @@ import {
 	DialogContent,
 	DialogTitle,
 	Fab,
+	Select,
+	MenuItem,
 } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DateTimePicker } from "@mui/lab";
 import AddIcon from "@mui/icons-material/Add";
 import { API_URL } from "../constants";
 import useAuthToken from "../hooks/useAuthToken";
+import useFetchCreditCards from "../hooks/useFetchCreditCards"; // Make sure to import the hook
 
 const CreateExpenseModal = ({ onClose }) => {
+	// Existing state variables
 	const [amount, setAmount] = useState(0);
 	const [category, setCategory] = useState("Food");
-	const [source, setSource] = useState("");
+	const [source, setSource] = useState("Cash");
 	const [expenseDate, setExpenseDate] = useState(new Date());
 	const [open, setOpen] = useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-		if (onClose) onClose();
-	};
-
+	// New state variable for userId
 	const token = useAuthToken();
 	const [userId, setUserId] = useState("");
+
+	// Fetch credit cards using the custom hook
+	const { creditCards, loading, error } = useFetchCreditCards(userId);
 
 	useEffect(() => {
 		if (token) {
@@ -57,6 +56,18 @@ const CreateExpenseModal = ({ onClose }) => {
 		} catch (error) {
 			console.log("Error posting expense data:", error);
 		}
+	};
+
+	const handleSourceChange = (event) => {
+		setSource(event.target.value);
+	};
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+		if (onClose) onClose();
 	};
 
 	return (
@@ -86,14 +97,22 @@ const CreateExpenseModal = ({ onClose }) => {
 							value={category}
 							onChange={(e) => setCategory(e.target.value)}
 						/>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
+						<Select
 							label="Source"
 							value={source}
-							onChange={(e) => setSource(e.target.value)}
-						/>
+							onChange={handleSourceChange}
+							displayEmpty
+							fullWidth
+							margin="normal"
+						>
+							<MenuItem value="Cash">Cash</MenuItem>
+							{creditCards &&
+								creditCards.map((card) => (
+									<MenuItem key={card.id} value={card.id}>
+										{card.cardName}
+									</MenuItem>
+								))}
+						</Select>
 						<LocalizationProvider dateAdapter={AdapterDateFns}>
 							<DateTimePicker
 								label="Expense Date"
