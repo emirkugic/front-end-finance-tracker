@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../constants";
+import useAuthToken from "./useAuthToken";
 
 type IncomeData = {
 	date: string;
@@ -16,6 +17,7 @@ const useFetchIncomeData = (
 	endDate: string
 ) => {
 	const [incomeData, setIncomeData] = useState<IncomeData[]>([]);
+	const token = useAuthToken();
 
 	useEffect(() => {
 		const fetchIncomeData = async () => {
@@ -24,6 +26,9 @@ const useFetchIncomeData = (
 					`${API_URL}/incomes/getBetweenDates`,
 					{
 						params: { userId, startDate, endDate },
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
 					}
 				);
 
@@ -47,7 +52,7 @@ const useFetchIncomeData = (
 		};
 
 		fetchIncomeData();
-	}, [userId, startDate, endDate]);
+	}, [userId, startDate, endDate, token]);
 
 	return incomeData;
 };

@@ -1,8 +1,7 @@
 // hooks/useUpdateEmail.js
 import { useState } from "react";
 import useAuthToken from "./useAuthToken";
-
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../constants";
 
 const useUpdateEmail = () => {
 	const [loading, setLoading] = useState(false);

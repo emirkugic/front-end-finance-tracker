@@ -11,9 +11,15 @@ const useDeleteUser = () => {
 		setError(null);
 		setIsSuccess(false);
 
+		const token = localStorage.getItem("token");
+
 		try {
 			const response = await fetch(`${API_URL}/users/${userId}`, {
 				method: "DELETE",
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
 			});
 
 			if (!response.ok) {

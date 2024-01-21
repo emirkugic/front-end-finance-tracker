@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../constants";
+import useAuthToken from "./useAuthToken";
 
 type TransactionType = "income" | "expense";
 
@@ -18,6 +19,7 @@ const useFetchAndCombineData = (
 	endDate: string
 ) => {
 	const [combinedData, setCombinedData] = useState<CombinedData[]>([]);
+	const token = useAuthToken();
 
 	useEffect(() => {
 		const fetchAndCombine = async () => {
@@ -25,9 +27,15 @@ const useFetchAndCombineData = (
 				const [expensesResponse, incomesResponse] = await Promise.all([
 					axios.get(`${API_URL}/expenses/getBetweenDates`, {
 						params: { userId, startDate, endDate },
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
 					}),
 					axios.get(`${API_URL}/incomes/getBetweenDates`, {
 						params: { userId, startDate, endDate },
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
 					}),
 				]);
 
@@ -58,7 +66,7 @@ const useFetchAndCombineData = (
 		};
 
 		fetchAndCombine();
-	}, [userId, startDate, endDate]);
+	}, [userId, startDate, endDate, token]);
 
 	return combinedData;
 };

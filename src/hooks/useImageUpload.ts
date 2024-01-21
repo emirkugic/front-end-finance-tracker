@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { API_URL } from "../constants"; // API_URL = "http://localhost:8080/api";
+import { API_URL } from "../constants";
+import useAuthToken from "./useAuthToken";
 
 const useImageUpload = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [data, setData] = useState(null);
+	const token = useAuthToken();
 
 	const uploadImage = async (image, userId) => {
 		setIsLoading(true);
@@ -18,6 +20,9 @@ const useImageUpload = () => {
 			const response = await fetch(`${API_URL}/image/upload`, {
 				method: "POST",
 				body: formData,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			});
 
 			if (!response.ok) {
