@@ -78,7 +78,6 @@ function ResponsiveAppBar() {
 						Financier
 					</Typography>
 
-					{/* Mobile view menu */}
 					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 						<IconButton
 							size="large"
@@ -118,7 +117,6 @@ function ResponsiveAppBar() {
 						</Menu>
 					</Box>
 
-					{/* Desktop view menu */}
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (
 							<Button

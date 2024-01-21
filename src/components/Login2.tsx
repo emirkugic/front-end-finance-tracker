@@ -17,6 +17,8 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import useAuthToken from "../hooks/useAuthToken";
+import useFetchUserData from "../hooks/useFetchUserData";
+import { jwtDecode } from "jwt-decode";
 
 const Login2: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -33,12 +35,34 @@ const Login2: React.FC = () => {
 	const authState = useSelector((state) => state.auth);
 	const token = useAuthToken();
 
+	const [userId, setUserId] = useState(null);
+
+	useEffect(() => {
+		if (token) {
+			const decoded = jwtDecode(token);
+			setUserId(decoded.userId);
+		}
+	}, [token]);
+
+	const { userData } = useFetchUserData(userId);
+
 	useEffect(() => {
 		if (authState.userToken) {
 			localStorage.setItem("jwtToken", authState.userToken);
 			setSnackbarMessage("Login successful!");
 			setSnackbarOpen(true);
-			navigate("/profile");
+
+			const isAdmin =
+				userData.userType === "ADMIN" ||
+				userData.authorities?.some((auth) => auth.authority === "ADMIN");
+
+			if (isAdmin) {
+				navigate("/admin");
+				console.log("ADMIN IS TRUE");
+			} else {
+				navigate("/profile");
+			}
+
 			console.log("Login2 component");
 			console.log("JWT Token:", token);
 		}
@@ -51,7 +75,7 @@ const Login2: React.FC = () => {
 			setSnackbarMessage(authState.error);
 			setSnackbarOpen(true);
 		}
-	}, [authState, navigate, token]);
+	}, [authState, navigate, token, userData]);
 
 	const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

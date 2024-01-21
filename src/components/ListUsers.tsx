@@ -17,12 +17,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const ListUsers = () => {
 	const { users, loading, error } = useFetchAllUsers();
 	const { deleteUser } = useDeleteUser();
-	const logout = useLogout();
 	const [searchTerm, setSearchTerm] = useState("");
 	const [usersList, setUsersList] = useState(users || []);
 
 	const theme = useTheme();
 	const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+	const logout = useLogout();
 
 	const handleDeleteUser = async (userId: string) => {
 		await deleteUser(userId);
